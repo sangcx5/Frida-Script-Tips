@@ -1,0 +1,4 @@
+# My Frida Script
+
+hello
+
