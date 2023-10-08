@@ -25,3 +25,18 @@ Or try other "overload" if no result
 .overload('[C', 'int', 'int')
 .overload('java.lang.CharSequence', 'android.widget.TextView$BufferType', 'boolean', 'int')
 ```
+
+### 2. Get list of methods defined inside a class
+
+```javascript
+function listOfMethods(className) {
+    // for ex: className = com.sangcx.lab.MainActivity
+    console.log("\n======== List of methods of " + className + "========");
+    let targetClass = Java.use(className);
+    let methods = targetClass.class.getDeclaredMethods();
+    for (let i = 0; i < methods.length; i++) {
+        console.log(methods[i].toString());
+    }
+    console.log("========" + className + "========\n\n");
+}
+```
