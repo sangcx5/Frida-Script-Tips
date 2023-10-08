@@ -1,8 +1,8 @@
-# My Frida Script
+# My Frida Script Tips
 
-### 1. Search String
+### 1. Find String
 
-Search where a specific string is set in android app
+Find where a specific string is set in android app
 
 ```javascript
 let TextView = Java.use("android.widget.TextView");
@@ -26,11 +26,11 @@ Or try other "overload" if no result
 .overload('java.lang.CharSequence', 'android.widget.TextView$BufferType', 'boolean', 'int')
 ```
 
-### 2. Search Button
+### 2. Find Button
 
-Search where a "OnClickListener" is set for a button in android app
+Find where a "OnClickListener" is set for a button in android app
 
-#### Search by text
+#### Find by text
 
 ```javascript
 const Button = Java.use("android.widget.Button");
@@ -49,7 +49,7 @@ Button.setOnClickListener.implementation = function (listener) {
 };
 ```
 
-#### Search by ID
+#### Find by ID
 
 Use script below and click to button to get it's "ID\_INT"
 

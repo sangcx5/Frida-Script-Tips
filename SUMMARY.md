@@ -1,3 +1,3 @@
 # Table of contents
 
-* [My Frida Script](README.md)
+* [My Frida Script Tips](README.md)
