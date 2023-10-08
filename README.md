@@ -33,11 +33,15 @@ Search where a "OnClickListener" is set for a button in android app
 ```javascript
 const Button = Java.use("android.widget.Button");
 Button.setOnClickListener.implementation = function (listener) {
-    const btn = Java.cast(this, Java.use("android.widget.Button"));
-    const text = btn.getText().toString();
-    if (text === "Click me") {
-        // will show location
-        console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Exception").$new()));
+    try {
+        const btn = Java.cast(this, Java.use("android.widget.Button"));
+        const text = btn.getText().toString();
+        if (text === "Click me") {
+            // will show the location
+            console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.ClassCastException").$new()));
+        }
+    } catch (error) {
+        
     }
     this.setOnClickListener(listener);
 };
