@@ -30,6 +30,8 @@ Or try other "overload" if no result
 
 Search where a "OnClickListener" is set for a button in android app
 
+#### Search by text
+
 ```javascript
 const Button = Java.use("android.widget.Button");
 Button.setOnClickListener.implementation = function (listener) {
@@ -45,6 +47,62 @@ Button.setOnClickListener.implementation = function (listener) {
     }
     this.setOnClickListener(listener);
 };
+```
+
+#### Search by ID
+
+Use script below and click to button to get it's "ID\_INT"
+
+```javascript
+const Button = Java.use("android.widget.Button");
+const context = Java.use("android.app.ActivityThread").currentApplication().getApplicationContext();
+const packageName = context.getPackageName();
+const resources = context.getResources();
+
+Button.setOnClickListener.implementation = function (listener) {
+    const clone = Java.retain(listener);
+    let text = "";
+    try {
+        const btn = Java.cast(this, Java.use("android.widget.Button"));
+        text = btn.getText().toString();
+    } catch {
+        text = "";
+    }
+    Java.registerClass({
+        name: "com.example.CustomListener",
+        implements: [clone],
+        methods: {
+            onClick: function (view) {
+                const buttonXMLId = view.toString().split("app:")[1].replace("}", "").split("/")[1];
+                const buttonIntId = resources.getIdentifier(buttonXMLId, "id", packageName);
+                console.log(`Button ${text ? '"' + text + '"' : ""} with {XML_ID = ${buttonXMLId}} and {ID_INT = ${buttonIntId}} was clicked`);
+                clone.onClick(view);
+            },
+        },
+    });
+    const customListenerClass = Java.use("com.example.CustomListener");
+    const customListenerInstance = customListenerClass.$new();
+    this.setOnClickListener(customListenerInstance);
+};
+
+```
+
+use ID\_INT above to get result
+
+```javascript
+const Button = Java.use("android.widget.Button");
+
+Button.setOnClickListener.implementation = function (listener) {
+    try {
+        const INT_ID = 2131230818; // change it
+        if (this.getId() === INT_ID) {
+            // get location here
+            console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.ClassCastException").$new()));
+        }
+    } catch (error) {}
+    this.setOnClickListener(listener);
+};
+
 ```
 
 ### 3. Get list of methods defined inside a class
