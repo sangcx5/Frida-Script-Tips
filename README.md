@@ -2,7 +2,7 @@
 
 ### 1. Search String
 
-Search where a specific string is set in android
+Search where a specific string is set in android app
 
 ```javascript
 let TextView = Java.use("android.widget.TextView");
@@ -26,7 +26,24 @@ Or try other "overload" if no result
 .overload('java.lang.CharSequence', 'android.widget.TextView$BufferType', 'boolean', 'int')
 ```
 
-### 2. Get list of methods defined inside a class
+### 2. Search Button
+
+Search where a "OnClickListener" is set for a button in android app
+
+```javascript
+const Button = Java.use("android.widget.Button");
+Button.setOnClickListener.implementation = function (listener) {
+    const btn = Java.cast(this, Java.use("android.widget.Button"));
+    const text = btn.getText().toString();
+    if (text === "Click me") {
+        // will show location
+        console.log(Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Exception").$new()));
+    }
+    this.setOnClickListener(listener);
+};
+```
+
+### 3. Get list of methods defined inside a class
 
 ```javascript
 function listOfMethods(className) {
